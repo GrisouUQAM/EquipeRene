@@ -15,7 +15,8 @@
 	</form>
 	
 	<?php
-	$age=12; 
+	$age=$_POST['age'];
+ 
 	if($age<5){
 	    $verdict='Ouh le bébé !';
 	}
