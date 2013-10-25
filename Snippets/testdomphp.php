@@ -202,7 +202,7 @@ and open the template in the editor.
    //     $src = "http://localhost";
     //    $src = "http://fr.wikipedia.org/wiki/Quebec";
         echo '<a href=" ' . $src . '" > ' . $src . '</a>';
-
+ #test
 
         #         $html = file_get_html($src);
 #        foreach($html->find ('title') as $i){
