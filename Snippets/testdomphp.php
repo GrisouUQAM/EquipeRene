@@ -57,11 +57,11 @@ and open the template in the editor.
 
         function prettyPrintDomNodeList($node) {
             echo "<br/><table border = '1'> ";
-            $wordList = array();
-            subPrettyPrintDomNodeList($node, $wordList);
+            $AllWords = array();
+            $AllWords =  subPrettyPrintDomNodeList($node);
             echo "<table/>";
             echo '<h2>Liste complette des mots</h2>';
-            var_dump($wordList);
+            var_dump($AllWords);
             //PREG page 112 
         }
 
@@ -77,8 +77,8 @@ and open the template in the editor.
           9 document XML_DOCUMENT_NODE
          */
 
-        function subPrettyPrintDomNodeList(DOMNode $root, $wordList) {
-
+        function subPrettyPrintDomNodeList(DOMNode $root) {
+            $AllWordsOfThisNodeAndChildren = array();
             if ($root->hasChildNodes())
                 echo '<tr>';
             echo '<td><pre>';
@@ -103,8 +103,10 @@ and open the template in the editor.
 
 
                 foreach ($root->childNodes as $element) {
-                    $lastResult = subPrettyPrintDomNodeList($element, $wordList);
-              //      $result = array_merge($wordList, $lastResult);
+                    $lastResult = subPrettyPrintDomNodeList($element);
+                    $AllWordsOfThisNodeAndChildren =
+                            array_merge($AllWordsOfThisNodeAndChildren
+                                                            , $lastResult);
 
                     //         return $result;
                 }
@@ -116,19 +118,29 @@ and open the template in the editor.
                     echo 'NodeValue: ' . $root->nodeValue;
                     echo '<br/>TextContent: ' . $root->textContent;
 
-                    $nodeWords = array();
-                    preg_match_all('/(\S+)/', $root->textContent, $nodeWords, PREG_PATTERN_ORDER);
+                    $thisNodeWords = array();
+                    //ATTENTION preg_match_all retourne un arrays de arrays
+                    preg_match_all('/(\S+)/', $root->textContent, $thisNodeWords, PREG_PATTERN_ORDER);
+                    // this node does not have children so ....
+                    reset($thisNodeWords); // mettre pointeur au début
+                    // $thisNodeWords[0] qui ne marche pas en copie
+                    $AllWordsOfThisNodeAndChildren = current($thisNodeWords);  // $thisNodeWords[0] qui ne marche pas en copie
+                    //TODO replace In Preg_Match_all  ThisNodeWords with $allWords...
+                    //
+                    //
+               
 
-
-                    // $result = array_merge( $lastResult, $nodeWords[0]);
-
-                    var_dump($nodeWords[0]);  // vecteur des mots du node
+                    var_dump($thisNodeWords[0]);  // vecteur des mots du node
 
                     echo '</pre></td>';
                 }
                 echo '<tr/>';
                 //    return $nodeWords[0];
             }
+            
+              
+               return $AllWordsOfThisNodeAndChildren;
+            
         }
 
         /* xiToXpath($sxi, $key = null, &$tmp = null)
@@ -193,15 +205,15 @@ and open the template in the editor.
 #,,,,,,,,,,,,,,,,,,,,,,,,DEBUT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
         require 'simple_html_dom.php';
 
-        echo "<h1>Exemple de DOM sur en.wikipedia.org </h1>";
+        echo "<h1>Exemple de DOM 2 sur .... </h1>";
         echo '<p>auteur : René Pellerin';
         echo '<p> Page interrogé ';
 
         $src = "http://www.google.ca/";
         $src = "http://www.uqam.ca";
-   //     $src = "http://localhost";
-    //    $src = "http://fr.wikipedia.org/wiki/Quebec";
-        echo '<a href=" ' . $src . '" > ' . $src . '</a>';
+       $src = "http://localhost";
+ //   $src = "http://fr.wikipedia.org/wiki/Quebec";
+        echo '<h1><a href=" ' . $src . '" > ' . $src . '</a></h1>';
  #test
 
         #         $html = file_get_html($src);
