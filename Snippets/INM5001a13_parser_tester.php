@@ -32,6 +32,7 @@
          echo '<h1>  Test parse of HTML web page : </h1>';
          echo '<a href=' . $url .  '>'.$url.'</a></br>';
          $textHTML = INM5001A13_Parser::parseHTMLtextToArray($url);
+         
         var_dump($textHTML);
         echo "<h1>Word List</h1><table border = '1'>";
         foreach ( $textHTML as $word){

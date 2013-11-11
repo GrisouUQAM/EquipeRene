@@ -44,8 +44,43 @@ class INM5001A13_Parser {
             libxml_clear_errors();  # ne pas conserver les erreurs xml
         }
         return INM5001A13_Parser::extractTextArrayFromRootDomNode($dom->documentElement);
-    }         
-
+    }      
+    
+    
+    public static function parseHTMLtextToArrayWithFilter($url,$tagArray) {
+        $xpathQuery =  '//' . $tagArray[0] ;
+   
+        for ($i = 1 ; $i < sizeof($tagArray); $i++){
+            $xpathQuery .= '|//' . $tagArray[$i]   ;
+            
+        }
+       
+        echo ' QUERY :' . $xpathQuery . ' </br>';
+        
+        $html = file_get_contents($url); #get file from web site
+        $dom = new DOMDocument();  
+        
+        libxml_use_internal_errors(TRUE);   # protect against malformed web site
+        if (!empty($html)) {
+            $dom->loadHTML($html);  # charger le html dans DOM
+            libxml_clear_errors();  # ne pas conserver les erreurs xml
+        }
+        $xpath = new DOMXPath($dom);
+       // $xpathQuery = "//*";  // test avec tout
+        
+        $domPartiel = $xpath->query($xpathQuery);
+        $textFromAllNodes = array();
+        foreach ($domPartiel as $node){
+            
+            $textFromAllNodes = array_merge( $textFromAllNodes , INM5001A13_Parser::extractTextArrayFromRootDomNode($node));
+            
+        }
+            
+          //test return first  
+         return $textFromAllNodes;
+    }
+    
+    
    public static function extractTextArrayFromRootDomNode(DOMNode $node) {
         // Construct array node by node
         $AllWordsOfThisNodeAndHisChildren = array();
