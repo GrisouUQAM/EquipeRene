@@ -29,7 +29,7 @@
         $url = "http://localhost";
         $url = "http://www.uqam.ca";
         $url = "http://fr.wikipedia.org/wiki/Quebec";
-          $url = "http://en.wikipedia.org/wiki/Talk:Mental_disorder";
+        $url = "http://en.wikipedia.org/wiki/Talk:Mental_disorder";
          echo '<h1>  Test parse of HTML web page : </h1>';
          echo '<a href=' . $url .  '>'.$url.'</a></br>';
          $textHTML = INM5001A13_Parser::parseHTMLtextToArray($url);
