@@ -81,7 +81,7 @@ class INM5001A13_Parser {
     }
     
     
-   public static function extractTextArrayFromRootDomNode(DOMNode $node) {
+   private static function extractTextArrayFromRootDomNode(DOMNode $node) {
         // Construct array node by node
         $AllWordsOfThisNodeAndHisChildren = array();
 

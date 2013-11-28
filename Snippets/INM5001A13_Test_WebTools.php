@@ -14,6 +14,7 @@ and open the template in the editor.
 
         <?php
         $url = ("http://en.wikipedia.org/wiki/Talk:Insect");
+        $url = ("http://localhost/EquipeRene/Snippets/pagePourTestUnitaireWebTool.html");
         $webtool = new INM5001A13_WebTools($url);
         ?>
  
