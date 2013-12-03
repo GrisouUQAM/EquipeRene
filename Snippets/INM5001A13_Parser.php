@@ -55,8 +55,7 @@ class INM5001A13_Parser {
             
         }
        
-        echo ' QUERY :' . $xpathQuery . ' </br>';
-        
+          
         $html = file_get_contents($url); #get file from web site
         $dom = new DOMDocument();  
         
